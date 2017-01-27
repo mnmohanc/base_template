@@ -30,6 +30,14 @@ Vagrant.configure("2") do |config|
   end
 
 
+ # Ansible provisioner.
+  config.vm.provision "ansible" do |ansible|
+    ansible.playbook = "provision/playbook.yml"
+    ansible.host_key_checking = false
+    ansible.limit = "all"
+    ansible.inventory_path = "provision/inventory"
+    ansible.sudo = true
+  end
   
   
 

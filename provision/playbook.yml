@@ -1,0 +1,30 @@
+---
+- hosts: testcentos
+  gather_facts: yes
+  become: yes
+  become_method: sudo
+  become_user: root
+
+  vars:
+    user: joe
+    home: /home/joe
+
+
+  tasks:
+
+  - name: Install libselinux-python bindings
+    yum: name=libselinux-python state=present
+    tags: selinux
+
+  - name: Disable selinux
+    selinux: state=disabled
+    sudo: yes  
+
+  - name: create user
+    user:
+      name: "{{ user }}"
+
+  - name: copy module
+    copy:
+      dest: /etc/motd
+      content: "centos copy module"
